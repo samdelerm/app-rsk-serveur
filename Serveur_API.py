@@ -56,6 +56,7 @@ index_html = """
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Match Info</title>
+    <link rel="icon" type="image/png" href="/static/Ballon_tr2.png">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -239,8 +240,8 @@ index_html = """
     </script>
 </head>
 <body>
-    <h1>Match Info</h1>
-    <h2>Matches</h2>
+    <h1>Match Infos</h1>
+    <h2>Matchs</h2>
     <table>
         <thead>
             <tr>
@@ -264,7 +265,7 @@ index_html = """
             {% endfor %}
         </tbody>
     </table>
-    <h2>Generated Matches</h2>
+    <h2>Generated Matchs</h2>
     <table>
         <thead>
             <tr>
