@@ -572,6 +572,14 @@ def end_match():
             return jsonify({"message": "Match not found"}), 404
     except Exception as e:
         return jsonify({"message": "Error ending match"}), 500
+from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
+
+
+app_with_prefix = DispatcherMiddleware(Flask('dummy_app'), {
+    '/orga': server
+})
 if __name__ == "__main__":
-    server.run(host="0.0.0.0", debug=True, port=5000)
+    from werkzeug.serving import run_simple
+    run_simple("127.0.0.1", 5000, app_with_prefix)
+    #server.run(host='0.0.0.0', port=5000, debug=True)
