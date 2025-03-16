@@ -1,6 +1,6 @@
 import json
 from flask import Flask, request, jsonify, render_template_string
-
+URLBASE="orga"
 # API Serveur : Stocke les infos et gère les requêtes
 server = Flask(__name__)
 team_info = {
@@ -376,7 +376,7 @@ def distribute_teams_into_pools(teams):
     for i in range(num_pools):
         pools[i] = teams[i::num_pools]
 
-@server.route("/generate_pools", methods=["POST"])
+@server.route(f"/{URLBASE}/generate_pools", methods=["POST"])
 def generate_pools():
     try:
         if len(teams) < 2:
@@ -405,7 +405,7 @@ def generate_matches_for_pools():
                 })
                 match_id += 1
 
-@server.route("/generate_matches", methods=["POST"])
+@server.route("/{URLBASE}/generate_matches", methods=["POST"])
 def generate_matches():
     try:
         matches.clear()  # Clear existing matches before creating new ones
@@ -415,7 +415,7 @@ def generate_matches():
     except Exception as e:
         return jsonify({"message": "Error generating matches"}), 500
 
-@server.route("/add_team", methods=["POST"])
+@server.route("/{URLBASE}/add_team", methods=["POST"])
 def add_team():
     try:
         team_name = request.form.get("team_name")
@@ -428,7 +428,7 @@ def add_team():
     except Exception as e:
         return jsonify({"message": "Error adding team"}), 500
 
-@server.route("/delete_team", methods=["POST"])
+@server.route("/{URLBASE}/delete_team", methods=["POST"])
 def delete_team():
     try:
         data = request.get_json()
@@ -442,7 +442,7 @@ def delete_team():
     except Exception as e:
         return jsonify({"message": "Error deleting team"}), 500
 
-@server.route("/reset_data", methods=["POST"])
+@server.route("/{URLBASE}/reset_data", methods=["POST"])
 def reset_data_route():
     try:
         reset_data()
@@ -450,7 +450,7 @@ def reset_data_route():
     except Exception as e:
         return jsonify({"message": "Error resetting data"}), 500
 
-@server.route("/update_score", methods=["POST"])
+@server.route("/{URLBASE}/update_score", methods=["POST"])
 def update_score():
     global matches
     try:
@@ -470,7 +470,7 @@ def update_score():
     except Exception as e:
         return jsonify({"message": "Error updating scores, names, and timer"}), 500
 
-@server.route("/set_team_name", methods=["POST"])
+@server.route("/{URLBASE}/set_team_name", methods=["POST"])
 def set_team_name():
     global team_info
     try:
@@ -482,7 +482,7 @@ def set_team_name():
     except Exception as e:
         return jsonify({"message": "Error updating team names"}), 500
 
-@server.route("/get_team_info", methods=["GET"])
+@server.route("/{URLBASE}/get_team_info", methods=["GET"])
 def get_team_info():
     match_id = request.args.get("match_id")
     try:
@@ -501,14 +501,14 @@ def get_team_info():
     except Exception as e:
         return jsonify({"message": "Error fetching team info"}), 500
 
-@server.route("/get_matches", methods=["GET"])
+@server.route("/{URLBASE}/get_matches", methods=["GET"])
 def get_matches():
     try:
         return jsonify(matches), 200
     except Exception as e:
         return jsonify({"message": "Error fetching matches"}), 500
 
-@server.route("/add_update_match", methods=["POST"])
+@server.route("/{URLBASE}/add_update_match", methods=["POST"])
 def add_update_match():
     global matches
     try:
@@ -538,7 +538,7 @@ def add_update_match():
     except Exception as e:
         return jsonify({"message": "Error adding/updating match"}), 500
 
-@server.route("/start_match", methods=["POST"])
+@server.route("/{URLBASE}/orga/start_match", methods=["POST"])
 def start_match():
     global matches
     try:
@@ -554,7 +554,7 @@ def start_match():
     except Exception as e:
         return jsonify({"message": "Error starting match"}), 500
 
-@server.route("/end_match", methods=["POST"])
+@server.route("/{URLBASE}/end_match", methods=["POST"])
 def end_match():
     global matches
     try:
@@ -577,7 +577,7 @@ from werkzeug.middleware.dispatcher import DispatcherMiddleware
 
 
 app_with_prefix = DispatcherMiddleware(Flask('dummy_app'), {
-    '/orga': server
+    '/{URLBASE}': server
 })
 if __name__ == "__main__":
     from werkzeug.serving import run_simple
