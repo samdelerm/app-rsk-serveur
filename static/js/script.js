@@ -7,13 +7,17 @@ function submitForm(event, formId) {
     fetch(form.action.startsWith(URLBASE) ? form.action : URLBASE + form.action, {
         method: form.method,
         body: formData
-    }).then(response => response.json())
-      .then(data => {
-          if (data.message) {
-              alert(data.message);
-          }
-          window.location.reload();
-      }).catch(error => console.error('Error:', error));
+    }).then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    }).then(data => {
+        if (data.message) {
+            alert(data.message);
+        }
+        window.location.reload();
+    }).catch(error => console.error('Error:', error));
 }
 
 function deleteTeam(teamName) {
