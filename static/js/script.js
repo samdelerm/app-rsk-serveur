@@ -4,7 +4,7 @@ function submitForm(event, formId) {
     event.preventDefault();
     const form = document.getElementById(formId);
     const formData = new FormData(form);
-    fetch(URLBASE + form.action, {
+    fetch(form.action.startsWith(URLBASE) ? form.action : URLBASE + form.action, {
         method: form.method,
         body: formData
     }).then(response => response.json())
