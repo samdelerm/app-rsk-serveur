@@ -1,4 +1,4 @@
-URLBASE = "/orga"
+URLBASE = "/orga";
 
 function submitForm(event, formId) {
     event.preventDefault();
