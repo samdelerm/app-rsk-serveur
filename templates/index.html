@@ -174,18 +174,18 @@
         </tbody>
     </table>
     <h2>Add Team</h2>
-    <form id="add_team" action="/orga/add_team" method="post" onsubmit="submitForm(event, 'add_team')">
+    <form id="add_team" action="/add_team" method="post" onsubmit="submitForm(event, 'add_team')">
         <label for="team_name">Team Name:</label>
         <input type="text" id="team_name" name="team_name">
         <button type="submit">Add Team</button>
     </form>
     <h2>Generate Pools</h2>
-    <form id="generate_pools" action="/orga/generate_pools" method="post" onsubmit="submitForm(event, 'generate_pools')">
+    <form id="generate_pools" action="/generate_pools" method="post" onsubmit="submitForm(event, 'generate_pools')">
         <button type="submit">Generate</button>
     </form>
     {% if pools[0] or pools[1] or pools[2] or pools[3] %}
     <h2>Generate Matches</h2>
-    <form id="generate_matches" action="/orga/generate_matches" method="post" onsubmit="submitForm(event, 'generate_matches')">
+    <form id="generate_matches" action="/generate_matches" method="post" onsubmit="submitForm(event, 'generate_matches')">
         <button type="submit">Generate Matches</button>
     </form>
     {% endif %}
